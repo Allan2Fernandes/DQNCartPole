@@ -1,20 +1,19 @@
 import gymnasium as gym
 import numpy as np
-
 from DQN import DQN
 import tensorflow as tf
 
 num_episodes = 1000
 num_timesteps = 20000
-batch_size = 8
-env = gym.make('CartPole-v1', render_mode='human')
+batch_size = 16
+env = gym.make('CartPole-v1')
 #env.metadata['render_fps'] = 50
 action_size = env.action_space.n
 state_size = env.observation_space.shape[0]
 dqn = DQN(action_size=action_size, state_size=state_size)
 num_completed_steps = 0
 all_episodes_return = []
-for episode_number in range(1000):
+for episode_number in range(num_episodes):
     total_return = 0
     init_state = env.reset()[0]
     state = init_state
@@ -43,8 +42,6 @@ for episode_number in range(1000):
         if len(dqn.replay_buffer) > batch_size:
             dqn.train_double_DQN(batch_size=batch_size)
             pass
-
-
         pass
 
 
